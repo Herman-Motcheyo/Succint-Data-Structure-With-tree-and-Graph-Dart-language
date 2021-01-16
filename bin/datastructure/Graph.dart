@@ -3,16 +3,15 @@ import 'dart:core';
 
 import 'dart:io';
 
+import 'Node.dart';
+
 class Graph<T> {
   var cmpt = 0;
   var nbrVertex;
   List<List<Node<T>>> tab;
   List<Node<T>> tabSommet;
-  bool tree;
-  Node<T> root;
 
-  Graph(int nbrVertex, bool tree) {
-    this.tree = tree;
+  Graph(int nbrVertex) {
     this.nbrVertex = nbrVertex;
     tab = new List<List<Node<T>>>();
     tabSommet = new List<Node<T>>();
@@ -22,35 +21,11 @@ class Graph<T> {
   }
 
   void addNode(T value) {
-    if (cmpt == 0) {
-      this.root = new Node<T>();
-      this.root.index = cmpt;
-      this.root.value = value;
-      this.tabSommet.add(this.root);
-      this.cmpt += 1;
-    } else {
-      Node<T> node = new Node<T>();
-      node.index = cmpt;
-      node.value = value;
-      this.tabSommet.add(node);
-      this.cmpt += 1;
-    }
-  }
-
-  void addRoot(T root) {
-    if (cmpt == 0) {
-      this.root = new Node<T>();
-      this.root.index = cmpt;
-      this.root.value = root;
-      this.tabSommet.add(this.root);
-      this.cmpt += 1;
-    } else if (this.tree == true) {
-      addNode(root);
-      print(
-          'impossible d\'ajouter une nouvelle racine , la racine est: [ ${this.root.value} ]');
-    } else {
-      addNode(root);
-    }
+    Node<T> node = new Node<T>();
+    node.index = cmpt;
+    node.value = value;
+    this.tabSommet.add(node);
+    this.cmpt += 1;
   }
 
   //dans le cas d'un graphe la value1 represente le père et value2 le fils
@@ -62,48 +37,20 @@ class Graph<T> {
 
       if (tabSommet[i].value == value2) temp2 = tabSommet[i];
     }
-    //on verifie que les sommets entrer exitent et qu'il ne sont pas identiques
+    // on verifie que les sommets entrer exitent et qu'il ne sont pas identiques
     if (temp1 != null && temp2 != null && temp1.index != temp2.index) {
-      /*dans le cas d'un arbre la on verifie que la racine n'est pas le fils 
-      du sommet dont on veut creer la liaison*/
-      if (temp2.index != this.root.index || this.tree == false) {
-        /*dans le cas d'un arbre on verifie que le fils qu'on passe en parametre
-          n'est pas deja le père de celui qui est passé en paramètre */
-        if (this.tab[temp2.index].contains(temp1) == false) {
-          if (this.tree == false) {
-            this.tab[temp2.index].add(temp1);
-          } else {
-            /**on verifie si le fils qu'on veu inserer n'est pas deja contenu dans la liste 
-             * des fils du nœud parent
-            */
-            if (this.tab[temp1.index].contains(temp2) == false) {
-              this.tab[temp1.index].add(temp2);
-            }
-          }
-        } else if (this.tree == true) {
-          print(
-              'impossible de créer cette liaison [${temp1.value}] est deja le fils de [${temp2.value}]');
-        }
-      } else {
-        print(
-            'la racine [${this.root.value}] ne peut pas etre le fils d\'un sommet');
+      if (this.tab[temp2.index].contains(temp1) == false) {
+        this.tab[temp2.index].add(temp1);
+        this.tab[temp1.index].add(temp2);
       }
     } else {
-      print('impossible de créer cette liaison');
+      print("impossible de créer cette liaison");
     }
   }
 
   void printGraphe() {
     for (int i = 0; i < tabSommet.length; i++) {
-      if (this.tree == true) {
-        if (tabSommet[i].index == 0) {
-          stdout.write('root: ${tabSommet[i].value} --->');
-        } else {
-          stdout.write('${tabSommet[i].value} --->');
-        }
-      } else {
-        stdout.write('${tabSommet[i].value} --->');
-      }
+      stdout.write('${tabSommet[i].value} --->');
       for (int j = 0; j < tab[i].length; j++) {
         stdout.write(' ${tab[i][j].value}');
       }
@@ -120,7 +67,7 @@ class Graph<T> {
     return -1;
   }
 
-  int getIndexInGraphe(T nodeValue){
+  int getIndexInGraphe(T nodeValue) {
     for (int i = 0; i < tabSommet.length; i++) {
       if (nodeValue == tabSommet[i].value) {
         return tabSommet[i].indexInGraphe;
@@ -128,7 +75,7 @@ class Graph<T> {
     }
     return -1;
   }
-  
+
   List<Node<T>> getNeighbors(int index) {
     if (index > this.nbrVertex) {
       return null;
@@ -167,7 +114,7 @@ class Graph<T> {
 
   List<int> GloudEncoding(T root) {
     int indexRoot = getIndex(root);
-    int index = 0 , cmpt = 1;
+    int index = 0, cmpt = 1;
     List<int> tabCode = new List<int>();
     Queue<Node<T>> queue = new Queue<Node<T>>();
     if (indexRoot != -1) {
@@ -200,11 +147,4 @@ class Graph<T> {
     }
     return tabCode;
   }
-}
-
-class Node<T> {
-  T value;
-  int index;
-  int indexInGraphe;
-  bool marked = false;
 }
