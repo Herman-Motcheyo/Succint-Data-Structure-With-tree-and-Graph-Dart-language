@@ -1,4 +1,3 @@
-A simple command-line application.
-
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+# Succint Data Structure with tree and graph dart programmy language
+we show graph representation with succinct data structure. The end goal is to make the graph more accessible during application execution and thus accentuates the cache misses reduction and finally the execution time reduction of the entire application.
+ 
