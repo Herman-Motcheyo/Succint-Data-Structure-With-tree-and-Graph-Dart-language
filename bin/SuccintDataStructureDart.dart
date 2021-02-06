@@ -12,7 +12,7 @@ void main(List<String> arguments) {
   var reponse;
   do {
     print(
-        '                         ****************Bienvenue sur le Tp301 Structure DataStructure**************');
+        '                         ****************Bienvenue sur le Tp301 Succint DataStructure Groupe 24**************');
     print(
         '\n                                                SUCCINT DATA STRUCTURE   Dart                          ');
     print(
@@ -53,8 +53,7 @@ void main(List<String> arguments) {
           print(
               '*************************** Les sommets du graphe sont: **************************************');
           for (int j = 0; j < tree.tabSommet.length; j++) {
-            stdout.write(
-                '[${tree.tabSommet[j].value} ; ${tree.tabSommet[j].index}] ');
+            stdout.write('[${tree.tabSommet[j].value}] ');
           }
 
           stdout.write('\n');
@@ -82,7 +81,8 @@ void main(List<String> arguments) {
           List<String> parcours = tree.breathFirstSearch(tree.root.value);
           print('              $parcours  ');
           print(
-              '*****************************Le codage de l\'arbre avec Lound Encoding est:****************************************');
+              '*****************************Le codage de l\'arbre avec Lound Encoding est:********************');
+
           List<int> code = tree.loudEncoding(tree.root.value);
           print('              $code              ');
           print(
@@ -163,7 +163,7 @@ void main(List<String> arguments) {
         nbreMaxArret = nbreSommets * (nbreSommets - 1) / 2;
         print('                    ** Les sommets entres sont **');
         for (int j = 0; j < g.tabSommet.length; j++) {
-          stdout.write('[${g.tabSommet[j].value} ; ${g.tabSommet[j].index}] ');
+          stdout.write('[${g.tabSommet[j].value}] ');
         }
         stdout.write('\n');
         for (int i = 0; i < nbreMaxArret; i++) {
@@ -206,32 +206,4 @@ void main(List<String> arguments) {
     print('Voulez vous revenir au menu principal ? (1= oui et 0 = non)');
     reponse = int.parse(stdin.readLineSync());
   } while (reponse != 0);
-  // Graph<String> g = new Graph<String>(10, false);
-  // g.addRoot("a");
-  // g.addNode("b");
-  // g.addNode("c");
-  // g.addNode("d");
-  // g.addNode("e");
-  // g.addNode("f");
-  // g.addNode("g");
-  // g.addNode("h");
-  // g.addNode("i");
-  // g.addNode("j");
-
-  // g.addEdge("a", "b");
-  // g.addEdge("a", "c");
-  // g.addEdge("a", "d");
-  // g.addEdge("b", "e");
-  // g.addEdge("b", "f");
-  // g.addEdge("d", "g");
-  // g.addEdge("d", "h");
-  // g.addEdge("d", "i");
-  // g.addEdge("h", "j");
-  // g.printGraphe();
-  // List<String> parcours = g.breathFirstSearch(g.root.value);
-  // print(parcours);
-
-  // List<int> code = g.GloudEncoding(g.root.value);
-  // print(code);
-  //stdout.write('les enfants de ${tabChildren[i]} sont :');
 }
